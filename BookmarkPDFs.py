@@ -4,7 +4,7 @@ import re
 import sys
 import getopt
 
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfReader, PdfWriter
 
 
 class AutoBookmark:
@@ -26,7 +26,7 @@ class AutoBookmark:
         self.root_folder = root_folder
         os.chdir(root_folder)
 
-        self.report = PdfFileWriter()
+        self.report = PdfWriter()
 
     def printBookmarkStructure(self, report_type):
         """Display the bookmark hierarchy."""
@@ -79,7 +79,7 @@ class AutoBookmark:
             # Directories marked ignore will not be included in the merged
             # document.
             if "ignore" not in root:
-                bookmark_destination.append(self.report.getNumPages())
+                bookmark_destination.append(len(self.report.pages))
 
                 # Append PDF files into the merged document.
                 pdfs = [doc for doc in files if doc.endswith(".pdf")]
@@ -95,12 +95,12 @@ class AutoBookmark:
                 bookmark_name = self._name_bookmark(root)
 
                 if level == 0:
-                    parent = self.report.addBookmark(
+                    parent = self.report.add_outline_item(
                         bookmark_name, bookmark_destination[i], None
                     )
                     parent_list.append(parent)
                 else:
-                    parent = self.report.addBookmark(
+                    parent = self.report.add_outline_item(
                         bookmark_name, bookmark_destination[i], parent_list[level - 1]
                     )
                     if level >= len(parent_list):
@@ -133,8 +133,8 @@ class AutoBookmark:
             fileobj.seek(0)
             filecontent = fileobj.read()
             fileobj = BytesIO(filecontent)
-            reader = PdfFileReader(fileobj, strict=False)
-            self.report.appendPagesFromReader(reader)
+            reader = PdfReader(fileobj, strict=False)
+            self.report.append_pages_from_reader(reader)
 
     def _name_bookmark(self, root):
         """Remove Seg#/Term# prefix used to force ordering."""
