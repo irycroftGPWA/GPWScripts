@@ -9,7 +9,6 @@ CREATE PROCEDURE [dbo].[sp_00_0_RunStoredProcedures] AS
 
 EXEC [sp_00_a_MAKE_Claims] 
 EXEC [sp_00_b_MAKE_ClaimsSummed] 
---Test comment for commit
 EXEC [sp_00_c_Make_GSFSContract_Detail]
 EXEC [sp_00_d_UPDATE_GSFSContract_Detail]
 EXEC [sp_00_e_MAKE_SentruityContractSplit2022]
