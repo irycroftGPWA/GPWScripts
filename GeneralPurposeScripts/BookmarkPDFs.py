@@ -3,6 +3,14 @@ import os
 import re
 import sys
 import getopt
+import subprocess
+
+# implement pip as a subprocess:
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', fr'G:\!Actuarial\TriFile\_Python\bookmarks\AutoBookmark_PackageRequirements.txt'])
+
+path = ""
+exhibits = None
+appendices = None
 
 from PyPDF2 import PdfReader, PdfWriter
 
